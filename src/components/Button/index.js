@@ -5,12 +5,13 @@ import { Btn } from "./styles";
 Button.propTypes = {
   text: PropTypes.string,
   disabled: PropTypes.bool,
-  onClick: PropTypes.func.isRequired
+  onClick: PropTypes.func
 };
 
 Button.defaultProps = {
   text: "Enviar",
-  disabled: false
+  disabled: false,
+  onClick: () => {}
 };
 
 export default function Button({ disabled, text, onClick }) {

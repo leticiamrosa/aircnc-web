@@ -1,31 +1,46 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import { Container, Content, Logo, Form, Input, Label, Text } from "./styles";
+import React, { useState } from "react";
+import api from "../../services/api";
+import { Form, Input, Label, Text } from "./styles";
 import Button from "../../components/Button";
-import logo from "../../assets/logo.svg";
+import Wrapper from "../../components/Wrapper";
 
-export default class Login extends Component {
-  render() {
-    return (
-      <Container>
-        <Logo src={logo} alt="Sp Spots" />
-        <Content>
-          <Text>
-            Ofereça <strong>spots</strong> para programadores e encontre{" "}
-            <strong>taletos</strong> para sua empresa.
-          </Text>
+export default function Login({ history }) {
+  const [email, setEmail] = useState();
 
-          <Form>
-            <Label htmlFor="email">E-MAIL *</Label>
-            <Input type="email" id="email" placeholder="Seu melhor e-mail" />
-            <Button type="submit">Entrar</Button>
-          </Form>
-        </Content>
-      </Container>
-    );
+  async function handleSubmit(e) {
+    e.preventDefault();
+
+    const response = await api.post("/sessions", {
+      email
+    });
+
+    const { _id } = response.data;
+
+    if (_id) {
+      localStorage.setItem("user", _id);
+      setTimeout(() => {
+        history.push("/dashboard");
+      }, 200);
+    }
   }
-}
 
-Login.propTypes = {
-  logo: PropTypes.string.isRequired
-};
+  return (
+    <Wrapper>
+      <Text>
+        Ofereça <strong>spots</strong> para programadores e encontre{" "}
+        <strong>taletos</strong> para sua empresa.
+      </Text>
+
+      <Form onSubmit={handleSubmit}>
+        <Label htmlFor="email">E-MAIL *</Label>
+        <Input
+          type="email"
+          id="email"
+          placeholder="Seu melhor e-mail"
+          onChange={e => setEmail(e.target.value)}
+        />
+        <Button type="submit" text="Entrar" />
+      </Form>
+    </Wrapper>
+  );
+}

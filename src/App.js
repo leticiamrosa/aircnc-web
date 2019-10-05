@@ -1,13 +1,9 @@
 import React from "react";
-import Login from "./pages/Login";
+import Routes from "./routes";
 import "./App.css";
 
 function App() {
-  return (
-    <div className="container">
-      <Login />
-    </div>
-  );
+  return <Routes />;
 }
 
 export default App;
