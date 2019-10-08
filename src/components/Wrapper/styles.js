@@ -18,4 +18,10 @@ export const Content = styled.div`
   padding: 30px;
 `;
 
+export const LogoText = styled.h1`
+  font-weight: bold;
+  color: #ddd;
+  font-size: 3rem;
+`;
+
 export const Logo = styled.img``;

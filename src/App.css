@@ -14,7 +14,7 @@ body,
 }
 
 body {
-  background: #000 url("./assets/background.jpg");
+  background: #000 url("./assets/sp_bg.jpg");
   background-size: cover;
   -webkit-font-smoothing: antialiased !important;
 }

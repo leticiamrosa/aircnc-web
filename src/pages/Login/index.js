@@ -6,21 +6,30 @@ import Wrapper from "../../components/Wrapper";
 
 export default function Login({ history }) {
   const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
+  const [name, setName] = useState();
+  const [loading, setLoading] = useState(false);
 
   async function handleSubmit(e) {
     e.preventDefault();
+    setLoading(true);
 
-    const response = await api.post("/sessions", {
-      email
+    const response = await api.post("/users/create", {
+      email,
+      password,
+      name
     });
 
-    const { _id } = response.data;
+    const { user, token } = response.data;
 
-    if (_id) {
-      localStorage.setItem("user", _id);
-      setTimeout(() => {
-        history.push("/dashboard");
-      }, 200);
+    if (response.status === 200) {
+      if (user) {
+        localStorage.setItem("user", user._id);
+        localStorage.setItem("token", token);
+        setTimeout(() => {
+          history.push("/new");
+        }, 200);
+      }
     }
   }
 
@@ -32,6 +41,14 @@ export default function Login({ history }) {
       </Text>
 
       <Form onSubmit={handleSubmit}>
+        <Label htmlFor="name">NOME *</Label>
+        <Input
+          type="text"
+          id="name"
+          placeholder="Seu nome"
+          onChange={e => setName(e.target.value)}
+        />
+
         <Label htmlFor="email">E-MAIL *</Label>
         <Input
           type="email"
@@ -39,7 +56,16 @@ export default function Login({ history }) {
           placeholder="Seu melhor e-mail"
           onChange={e => setEmail(e.target.value)}
         />
-        <Button type="submit" text="Entrar" />
+
+        <Label htmlFor="email">SENHA *</Label>
+        <Input
+          type="password"
+          security
+          id="password"
+          placeholder="Digite uma senha"
+          onChange={e => setPassword(e.target.value)}
+        />
+        <Button type="submit" text="Entrar" loading={loading} />
       </Form>
     </Wrapper>
   );

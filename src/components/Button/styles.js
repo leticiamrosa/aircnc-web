@@ -12,6 +12,9 @@ export const Btn = styled.button`
   background-color: ${props => props.background || colors.primary};
   color: ${props => props.color || "#fff"};
   cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   :hover {
     background-color: ${colors.primaryDark};
@@ -19,3 +22,5 @@ export const Btn = styled.button`
     transition: 0.3s;
   }
 `;
+
+export const Text = styled.span``;
