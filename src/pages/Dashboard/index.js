@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useMemo } from "react";
 import api from "../../services/api";
-import { Link } from "react-router-dom";
 import Wrapper from "../../components/Wrapper";
 import {
   List,
@@ -13,7 +12,7 @@ import {
 import Button from "../../components/Button";
 import socketio from "socket.io-client";
 
-export default function Dashboard() {
+export default function Dashboard({ history }) {
   const [spots, setSpots] = useState([]);
   const [requests, setRequests] = useState([]);
 
@@ -94,9 +93,7 @@ export default function Dashboard() {
             </ListItem>
           ))}
       </List>
-      <Link to="/new">
-        <Button text="Cadastrar novo Spot" />
-      </Link>
+      <Button text="Cadastrar novo Spot" onClick={() => history.push("/new")} />
     </Wrapper>
   );
 }
